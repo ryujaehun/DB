@@ -10,18 +10,25 @@ This is CSE30500 DataBase TermProject
 * ODBC
 * RDBMS
 
+## 주제
+* ER 다이어그램 생성기
+  * ER diagram 생성
+  * 저장 및 불러오기
+  * ER diagram 문제
+
 ## TODO
-* 주제선정
-  * 데이터 범위 확정
+* ~~주제선정~~
+  * ~~데이터 범위 확정~~ 
 * 설계
   * ER 다이어그램
   * 스키마 확정
 * 개발
-  * GUI 개발
-  * DATABASE 연동
+  * GUI 개발(일단 MFC 로 안되면 QT)
+  * DATABASE 연동
 
 ## Requirement
 * VS2017
+* MFC
 
 ## LICENCE
 ![MIT LICENCE](LICENCE)
