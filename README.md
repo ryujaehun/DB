@@ -23,12 +23,15 @@ This is CSE30500 DataBase TermProject
   * ER 다이어그램
   * 스키마 확정
 * 개발
-  * GUI 개발(일단 MFC 로 안되면 QT)
-  * DATABASE 연동
+  * GUI 개발(일단 MFC 로 안되면 QT)
+  * DATABASE 연동
+
 
 ## Requirement
 * VS2017
 * MFC
+## References
+[google drive](https://drive.google.com/open?id=1N_61gpGlV2PGs8QAv2PP6bVF8ojeiQWc)
 
 ## LICENCE
 ![MIT LICENCE](LICENCE)
