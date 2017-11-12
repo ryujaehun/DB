@@ -31,7 +31,7 @@ This is CSE30500 DataBase TermProject
 * VS2017
 * MFC
 ## References
-[google drive](https://drive.google.com/open?id=1N_61gpGlV2PGs8QAv2PP6bVF8ojeiQWc)
+[google drive](https://drive.google.com/drive/folders/1N_61gpGlV2PGs8QAv2PP6bVF8ojeiQWc?usp=sharing)
 
 ## LICENCE
 ![MIT LICENCE](LICENCE)
