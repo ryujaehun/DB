@@ -1,7 +1,7 @@
 # DB
-___
+___   
 
-## About 
+## About
 This is CSE30500 DataBase TermProject
 
 ## 사용기술 및 언어
