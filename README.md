@@ -12,9 +12,11 @@ This is CSE30500 DataBase TermProject
 
 ## 주제
 * ER 다이어그램 생성기
-  * ER diagram 생성
-  * 저장 및 불러오기
-  * ER diagram 문제
+
+## 기능
+* ER diagram 생성
+* 저장 및 불러오기
+* ER diagram 문제
 
 ## TODO
 * ~~주제선정~~
