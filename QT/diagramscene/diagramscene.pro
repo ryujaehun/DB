@@ -15,5 +15,5 @@ RESOURCES   =	diagramscene.qrc
 
 
 # install
-target.path = $$[QT_INSTALL_EXAMPLES]/widgets/graphicsview/diagramscene
-INSTALLS += target
+#target.path = $$[QT_INSTALL_EXAMPLES]/widgets/graphicsview/diagramscene
+#INSTALLS += target
