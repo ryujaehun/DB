@@ -1,0 +1,12 @@
+INPUT(
+./release\mainwindow.o
+./release\diagramitem.o
+./release\main.o
+./release\arrow.o
+./release\diagramtextitem.o
+./release\diagramscene.o
+./release\qrc_diagramscene.o
+./release\moc_mainwindow.o
+./release\moc_diagramscene.o
+./release\moc_diagramtextitem.o
+);
