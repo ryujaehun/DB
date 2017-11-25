@@ -1,52 +1,9 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the demonstration applications of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+
+#ifndef DEDUG_LOGIC1
+#define DEDUG_LOGIC1
+#include <QTextStream>
+QTextStream out1(stdout);
+#endif //DEDUG_LOGIC
 
 #include "commands.h"
 
@@ -60,30 +17,38 @@ static const int setShapeColorCommandId = 2;
 AddShapeCommand::AddShapeCommand(Document *doc, const Shape &shape, QUndoCommand *parent)
     : QUndoCommand(parent)
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     m_doc = doc;
     m_shape = shape;
 }
 
 void AddShapeCommand::undo()
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     m_doc->deleteShape(m_shapeName);
 }
 
 void AddShapeCommand::redo()
 {
-    // A shape only gets a name when it is inserted into a document
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     m_shapeName = m_doc->addShape(m_shape);
     setText(QObject::tr("Add %1").arg(m_shapeName));
 }
 
-/******************************************************************************
-** RemoveShapeCommand
-*/
 
 RemoveShapeCommand::RemoveShapeCommand(Document *doc, const QString &shapeName,
                                         QUndoCommand *parent)
     : QUndoCommand(parent)
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     setText(QObject::tr("Remove %1").arg(shapeName));
     m_doc = doc;
     m_shape = doc->shape(shapeName);
@@ -92,22 +57,30 @@ RemoveShapeCommand::RemoveShapeCommand(Document *doc, const QString &shapeName,
 
 void RemoveShapeCommand::undo()
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     m_shapeName = m_doc->addShape(m_shape);
 }
 
 void RemoveShapeCommand::redo()
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     m_doc->deleteShape(m_shapeName);
 }
 
-/******************************************************************************
-** SetShapeColorCommand
-*/
+
 
 SetShapeColorCommand::SetShapeColorCommand(Document *doc, const QString &shapeName,
                                             const QColor &color, QUndoCommand *parent)
     : QUndoCommand(parent)
 {
+
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     setText(QObject::tr("Set %1's color").arg(shapeName));
 
     m_doc = doc;
@@ -118,16 +91,26 @@ SetShapeColorCommand::SetShapeColorCommand(Document *doc, const QString &shapeNa
 
 void SetShapeColorCommand::undo()
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     m_doc->setShapeColor(m_shapeName, m_oldColor);
 }
 
 void SetShapeColorCommand::redo()
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     m_doc->setShapeColor(m_shapeName, m_newColor);
 }
 
 bool SetShapeColorCommand::mergeWith(const QUndoCommand *command)
 {
+
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     if (command->id() != setShapeColorCommandId)
         return false;
 
@@ -141,6 +124,9 @@ bool SetShapeColorCommand::mergeWith(const QUndoCommand *command)
 
 int SetShapeColorCommand::id() const
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     return setShapeColorCommandId;
 }
 
@@ -152,6 +138,11 @@ SetShapeRectCommand::SetShapeRectCommand(Document *doc, const QString &shapeName
                                             const QRect &rect, QUndoCommand *parent)
     : QUndoCommand(parent)
 {
+
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
+
     setText(QObject::tr("Change %1's geometry").arg(shapeName));
 
     m_doc = doc;
@@ -162,16 +153,28 @@ SetShapeRectCommand::SetShapeRectCommand(Document *doc, const QString &shapeName
 
 void SetShapeRectCommand::undo()
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
+
+
     m_doc->setShapeRect(m_shapeName, m_oldRect);
 }
 
 void SetShapeRectCommand::redo()
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     m_doc->setShapeRect(m_shapeName, m_newRect);
 }
 
 bool SetShapeRectCommand::mergeWith(const QUndoCommand *command)
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
+
     if (command->id() != setShapeRectCommandId)
         return false;
 
@@ -185,5 +188,8 @@ bool SetShapeRectCommand::mergeWith(const QUndoCommand *command)
 
 int SetShapeRectCommand::id() const
 {
+  #ifdef DEDUG_LOGIC1
+    out1 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     return setShapeRectCommandId;
 }

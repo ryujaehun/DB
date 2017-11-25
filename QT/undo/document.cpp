@@ -1,52 +1,9 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the demonstration applications of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+#ifndef DEDUG_LOGIC2
+#define DEDUG_LOGIC2
+#include <QTextStream>
+QTextStream out2(stdout);
+#endif //DEDUG_LOGIC
+
 
 #include <qevent.h>
 #include <QPainter>
@@ -57,45 +14,65 @@
 
 static const int resizeHandleWidth = 6;
 
-/******************************************************************************
-** Shape
-*/
+
+
 
 const QSize Shape::minSize(80, 50);
 
 Shape::Shape(Type type, const QColor &color, const QRect &rect)
     : m_type(type), m_rect(rect), m_color(color)
 {
+     #ifdef DEDUG_LOGIC2
+      out2 <<__PRETTY_FUNCTION__<< endl;
+      #endif //DEDUG_LOGIC
 }
 
 Shape::Type Shape::type() const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     return m_type;
 }
 
 QRect Shape::rect() const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     return m_rect;
 }
 
 QColor Shape::color() const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     return m_color;
 }
 
 QString Shape::name() const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     return m_name;
 }
 
 QRect Shape::resizeHandle() const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     QPoint br = m_rect.bottomRight();
     return QRect(br - QPoint(resizeHandleWidth, resizeHandleWidth), br);
 }
 
 QString Shape::typeToString(Type type)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     QString result;
 
     switch (type) {
@@ -115,6 +92,10 @@ QString Shape::typeToString(Type type)
 
 Shape::Type Shape::stringToType(const QString &s, bool *ok)
 {
+
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     if (ok != 0)
         *ok = true;
 
@@ -137,6 +118,9 @@ Shape::Type Shape::stringToType(const QString &s, bool *ok)
 Document::Document(QWidget *parent)
     : QWidget(parent), m_currentIndex(-1), m_mousePressIndex(-1), m_resizeHandlePressed(false)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     m_undoStack = new QUndoStack(this);     //undo를 위한 스택
 
     setAutoFillBackground(true);
@@ -150,9 +134,11 @@ Document::Document(QWidget *parent)
 
 QString Document::addShape(const Shape &shape)                          //도형 추가
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     QString name = Shape::typeToString(shape.type());
     name = uniqueName(name);
-
     m_shapeList.append(shape);                                          //m_shapeList에 도형 추가
     m_shapeList[m_shapeList.count() - 1].m_name = name;
     setCurrentShape(m_shapeList.count() - 1);
@@ -162,6 +148,9 @@ QString Document::addShape(const Shape &shape)                          //도형
 
 void Document::deleteShape(const QString &shapeName)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     int index = indexOf(shapeName);
     if (index == -1)
         return;
@@ -180,6 +169,10 @@ void Document::deleteShape(const QString &shapeName)
 
 Shape Document::shape(const QString &shapeName) const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
+
     int index = indexOf(shapeName);
     if (index == -1)
         return Shape();
@@ -188,6 +181,9 @@ Shape Document::shape(const QString &shapeName) const
 
 void Document::setShapeRect(const QString &shapeName, const QRect &rect)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     int index = indexOf(shapeName);
     if (index == -1)
         return;
@@ -202,7 +198,9 @@ void Document::setShapeRect(const QString &shapeName, const QRect &rect)
 
 void Document::setShapeColor(const QString &shapeName, const QColor &color)
 {
-
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     int index = indexOf(shapeName);
     if (index == -1)
         return;
@@ -215,11 +213,17 @@ void Document::setShapeColor(const QString &shapeName, const QColor &color)
 
 QUndoStack *Document::undoStack() const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     return m_undoStack;
 }
 
 bool Document::load(QTextStream &stream)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     m_shapeList.clear();
 
     while (!stream.atEnd()) {
@@ -251,6 +255,9 @@ bool Document::load(QTextStream &stream)
 
 void Document::save(QTextStream &stream)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     for (int i = 0; i < m_shapeList.count(); ++i) {
         const Shape &shape = m_shapeList.at(i);
         QRect r = shape.rect();
@@ -269,16 +276,25 @@ void Document::save(QTextStream &stream)
 
 QString Document::fileName() const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     return m_fileName;
 }
 
 void Document::setFileName(const QString &fileName)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     m_fileName = fileName;
 }
 
 int Document::indexAt(const QPoint &pos) const                  //도형클릭시 인덱스 구하는 함수인데 먼저 겹치는 영역 클릭시에는 먼저 생성된 도형이 클릭됨
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     for (int i = m_shapeList.count() - 1; i >= 0; --i) {
         if (m_shapeList.at(i).rect().contains(pos))
             return i;
@@ -288,6 +304,9 @@ int Document::indexAt(const QPoint &pos) const                  //도형클릭�
 
 void Document::mousePressEvent(QMouseEvent *event)              //도형 클릭시 이벤트 처리
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     event->accept();
     int index = indexAt(event->pos());;
     if (index != -1) {
@@ -306,12 +325,18 @@ void Document::mousePressEvent(QMouseEvent *event)              //도형 클릭�
 
 void Document::mouseReleaseEvent(QMouseEvent *event)              //마우스 뗄때 이벤트(이거 없으면 클릭 뗐을 때도 도형 이동할듯)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     event->accept();
     m_mousePressIndex = -1;
 }
 
 void Document::mouseMoveEvent(QMouseEvent *event)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     event->accept();
 
     if (m_mousePressIndex == -1)
@@ -335,6 +360,9 @@ void Document::mouseMoveEvent(QMouseEvent *event)
 
 static QGradient gradient(const QColor &color, const QRect &rect)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     QColor c = color;
     c.setAlpha(160);
     QLinearGradient result(rect.topLeft(), rect.bottomRight());
@@ -346,6 +374,9 @@ static QGradient gradient(const QColor &color, const QRect &rect)
 
 static QPolygon triangle(const QRect &rect)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     QPolygon result(3);
     result.setPoint(0, rect.center().x(), rect.top());
     result.setPoint(1, rect.right(), rect.bottom());
@@ -355,6 +386,9 @@ static QPolygon triangle(const QRect &rect)
 
 void Document::paintEvent(QPaintEvent *event)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     QRegion paintRegion = event->region();
     QPainter painter(this);
     QPalette pal = palette();
@@ -405,6 +439,9 @@ void Document::paintEvent(QPaintEvent *event)
 
 void Document::setCurrentShape(int index)
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     QString currentName;
 
     if (m_currentIndex != -1)
@@ -423,6 +460,9 @@ void Document::setCurrentShape(int index)
 
 int Document::indexOf(const QString &shapeName) const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     for (int i = 0; i < m_shapeList.count(); ++i) {
         if (m_shapeList.at(i).name() == shapeName)
             return i;
@@ -432,6 +472,9 @@ int Document::indexOf(const QString &shapeName) const
 
 QString Document::uniqueName(const QString &name) const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     QString unique;
 
     for (int i = 0; ; ++i) {
@@ -447,8 +490,10 @@ QString Document::uniqueName(const QString &name) const
 
 QString Document::currentShapeName() const
 {
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
     if (m_currentIndex == -1)
         return QString();
     return m_shapeList.at(m_currentIndex).name();
 }
-

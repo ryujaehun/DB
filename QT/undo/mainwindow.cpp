@@ -1,52 +1,10 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the demonstration applications of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+#ifndef DEDUG_LOGIC4
+#define DEDUG_LOGIC4
+#include <QTextStream>
+QTextStream out4(stdout);
+//  out4 <<__PRETTY_FUNCTION__<< endl;
+#endif //DEDUG_LOGIC
+
 
 #include <QUndoGroup>
 #include <QUndoStack>
@@ -58,9 +16,14 @@
 #include "mainwindow.h"
 #include "commands.h"
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    #ifdef DEDUG_LOGIC4
+    out4 <<__PRETTY_FUNCTION__<< endl;
+    #endif //DEDUG_LOGIC
     setupUi(this);
 
     QWidget *w = documentTabs->widget(0);
@@ -120,6 +83,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::updateActions()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     Document *doc = currentDocument();
     m_undoGroup->setActiveStack(doc == 0 ? 0 : doc->undoStack());
     QString shapeName = doc == 0 ? QString() : doc->currentShapeName();
@@ -159,6 +125,9 @@ void MainWindow::updateActions()
 
 void MainWindow::openDocument()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QString fileName = QFileDialog::getOpenFileName(this);
     if (fileName.isEmpty())
         return;
@@ -187,6 +156,9 @@ void MainWindow::openDocument()
 
 QString MainWindow::fixedWindowTitle(const Document *doc) const
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QString title = doc->fileName();
 
     if (title.isEmpty())
@@ -221,6 +193,9 @@ QString MainWindow::fixedWindowTitle(const Document *doc) const
 
 void MainWindow::addDocument(Document *doc)
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     if (documentTabs->indexOf(doc) != -1)
         return;
     m_undoGroup->addStack(doc->undoStack());
@@ -234,16 +209,25 @@ void MainWindow::addDocument(Document *doc)
 
 void MainWindow::setCurrentDocument(Document *doc)
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     documentTabs->setCurrentWidget(doc);
 }
 
 Document *MainWindow::currentDocument() const
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     return qobject_cast<Document*>(documentTabs->currentWidget());
 }
 
 void MainWindow::removeDocument(Document *doc)
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     int index = documentTabs->indexOf(doc);
     if (index == -1)
         return;
@@ -262,6 +246,9 @@ void MainWindow::removeDocument(Document *doc)
 
 void MainWindow::saveDocument()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     Document *doc = currentDocument();
     if (doc == 0)
         return;
@@ -296,6 +283,9 @@ void MainWindow::saveDocument()
 
 void MainWindow::closeDocument()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     Document *doc = currentDocument();
     if (doc == 0)
         return;
@@ -316,11 +306,17 @@ void MainWindow::closeDocument()
 
 void MainWindow::newDocument()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     addDocument(new Document());
 }
 
 static QColor randomColor()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     int r = (int) (3.0*(rand()/(RAND_MAX + 1.0)));
     switch (r) {
         case 0:
@@ -335,6 +331,9 @@ static QColor randomColor()
 
 static QRect randomRect(const QSize &s)
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QSize min = Shape::minSize;
 
     int left = (int) ((0.0 + s.width() - min.width())*(rand()/(RAND_MAX + 1.0)));
@@ -347,6 +346,9 @@ static QRect randomRect(const QSize &s)
 
 void MainWindow::addShape()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     Document *doc = currentDocument();
     if (doc == 0)
         return;
@@ -367,6 +369,9 @@ void MainWindow::addShape()
 
 void MainWindow::removeShape()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     Document *doc = currentDocument();
     if (doc == 0)
         return;
@@ -380,6 +385,9 @@ void MainWindow::removeShape()
 
 void MainWindow::setShapeColor()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     Document *doc = currentDocument();
     if (doc == 0)
         return;
@@ -407,6 +415,9 @@ void MainWindow::setShapeColor()
 
 void MainWindow::addSnowman()                           //얜 뭐지?
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     Document *doc = currentDocument();
     if (doc == 0)
         return;
@@ -425,6 +436,9 @@ void MainWindow::addSnowman()                           //얜 뭐지?
 
 void MainWindow::addRobot()
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     Document *doc = currentDocument();
     if (doc == 0)
         return;
@@ -446,10 +460,16 @@ void MainWindow::addRobot()
 
 void MainWindow::about()                    //about메뉴에 출력되는 내용
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QMessageBox::about(this, tr("About Undo"), tr("The Undo demonstration shows how to use the Qt Undo framework."));
 }
 
 void MainWindow::aboutQt()                  //aboutQt메뉴에 출력되는 내용
 {
+  #ifdef DEDUG_LOGIC4
+  out4 <<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QMessageBox::aboutQt(this, tr("About Qt"));
 }

@@ -1,52 +1,10 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+#ifndef DEDUG_LOGIC2
+#define DEDUG_LOGIC2
+#include <QTextStream>
+QTextStream out2(stdout);
+//  out2 <<__PRETTY_FUNCTION__<< endl;
+#endif //DEDUG_LOGIC
+
 
 #include "diagramitem.h"
 #include "arrow.h"
@@ -61,10 +19,13 @@ DiagramItem::DiagramItem(DiagramType diagramType, QMenu *contextMenu,
              QGraphicsItem *parent)
     : QGraphicsPolygonItem(parent)
 {
+  #ifdef DEDUG_LOGIC2
+     out2 <<__PRETTY_FUNCTION__<< endl;
+  #endif
     myDiagramType = diagramType;
     myContextMenu = contextMenu;
     QPolygonF myPolygon1, myPolygon2;                   //두겹 도형 그리기 위한 폴리
-    QRectF qrect(-100, 100, );                                       //외접 사각형
+    //QRectF qrect(-100, 100 );                                       //외접 사각형
     QPainterPath path;                                  //QPainterPath: 그림 그리는 기능 제공함
     switch (myDiagramType) {
         case StartEnd:                                  //StartEnd: 시작 도형그리는 객체인데 gui에선 구현이 안된듯
@@ -124,6 +85,9 @@ DiagramItem::DiagramItem(DiagramType diagramType, QMenu *contextMenu,
 //! [1]
 void DiagramItem::removeArrow(Arrow *arrow)
 {
+  #ifdef DEDUG_LOGIC2
+     out2 <<__PRETTY_FUNCTION__<< endl;
+  #endif
     int index = arrows.indexOf(arrow);
 
     if (index != -1)
@@ -134,6 +98,9 @@ void DiagramItem::removeArrow(Arrow *arrow)
 //! [2]
 void DiagramItem::removeArrows()
 {
+  #ifdef DEDUG_LOGIC2
+     out2 <<__PRETTY_FUNCTION__<< endl;
+  #endif
     foreach (Arrow *arrow, arrows) {
         arrow->startItem()->removeArrow(arrow);
         arrow->endItem()->removeArrow(arrow);
@@ -146,6 +113,9 @@ void DiagramItem::removeArrows()
 //! [3]
 void DiagramItem::addArrow(Arrow *arrow)
 {
+  #ifdef DEDUG_LOGIC2
+     out2 <<__PRETTY_FUNCTION__<< endl;
+  #endif
     arrows.append(arrow);
 }
 //! [3]
@@ -153,6 +123,9 @@ void DiagramItem::addArrow(Arrow *arrow)
 //! [4]
 QPixmap DiagramItem::image() const
 {
+  #ifdef DEDUG_LOGIC2
+     out2 <<__PRETTY_FUNCTION__<< endl;
+  #endif
     QPixmap pixmap(250, 250);
     pixmap.fill(Qt::transparent);
     QPainter painter(&pixmap);
@@ -167,6 +140,9 @@ QPixmap DiagramItem::image() const
 //! [5]
 void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
+  #ifdef DEDUG_LOGIC2
+     out2 <<__PRETTY_FUNCTION__<< endl;
+  #endif
     scene()->clearSelection();
     setSelected(true);
     myContextMenu->exec(event->screenPos());
@@ -176,6 +152,9 @@ void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 //! [6]
 QVariant DiagramItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
+  #ifdef DEDUG_LOGIC2
+     out2 <<__PRETTY_FUNCTION__<< endl;
+  #endif
     if (change == QGraphicsItem::ItemPositionChange) {
         foreach (Arrow *arrow, arrows) {
             arrow->updatePosition();

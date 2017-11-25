@@ -7,6 +7,7 @@ FORMS += mainwindow.ui
 build_all:!build_pass {
     CONFIG -= build_all
     CONFIG += release
+CONFIG += console
 }
 
 RESOURCES += undo.qrc

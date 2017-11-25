@@ -1,52 +1,10 @@
-/****************************************************************************
-**
-** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
-**
-** BSD License Usage
-** Alternatively, you may use this file under the terms of the BSD license
-** as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of The Qt Company Ltd nor the names of its
-**     contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+#ifndef DEDUG_LOGIC6
+#define DEDUG_LOGIC6
+#include <QTextStream>
+QTextStream out6(stdout);
+//
+#endif //DEDUG_LOGIC
+
 
 #include "arrow.h"
 #include "diagramitem.h"
@@ -61,6 +19,9 @@ const int InsertTextButton = 10;
 //! [0]
 MainWindow::MainWindow()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     createActions();
     createToolBox();
     createMenus();
@@ -92,6 +53,9 @@ MainWindow::MainWindow()
 //! [1]
 void MainWindow::backgroundButtonGroupClicked(QAbstractButton *button)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QList<QAbstractButton *> buttons = backgroundButtonGroup->buttons();
     foreach (QAbstractButton *myButton, buttons) {
         if (myButton != button)
@@ -115,6 +79,9 @@ void MainWindow::backgroundButtonGroupClicked(QAbstractButton *button)
 //! [2]
 void MainWindow::buttonGroupClicked(int id)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QList<QAbstractButton *> buttons = buttonGroup->buttons();
     foreach (QAbstractButton *button, buttons) {
         if (buttonGroup->button(id) != button)
@@ -127,11 +94,12 @@ void MainWindow::buttonGroupClicked(int id)
         scene->setMode(DiagramScene::InsertItem);
     }
 }
-//! [2]
 
-//! [3]
 void MainWindow::deleteItem()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     foreach (QGraphicsItem *item, scene->selectedItems()) {
         if (item->type() == Arrow::Type) {
             scene->removeItem(item);
@@ -154,6 +122,9 @@ void MainWindow::deleteItem()
 //! [4]
 void MainWindow::pointerGroupClicked(int)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
 }
 //! [4]
@@ -161,6 +132,9 @@ void MainWindow::pointerGroupClicked(int)
 //! [5]
 void MainWindow::bringToFront()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     if (scene->selectedItems().isEmpty())
         return;
 
@@ -179,6 +153,9 @@ void MainWindow::bringToFront()
 //! [6]
 void MainWindow::sendToBack()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     if (scene->selectedItems().isEmpty())
         return;
 
@@ -197,6 +174,9 @@ void MainWindow::sendToBack()
 //! [7]
 void MainWindow::itemInserted(DiagramItem *item)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     pointerTypeGroup->button(int(DiagramScene::MoveItem))->setChecked(true);
     scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
     buttonGroup->button(int(item->diagramType()))->setChecked(false);
@@ -206,6 +186,9 @@ void MainWindow::itemInserted(DiagramItem *item)
 //! [8]
 void MainWindow::textInserted(QGraphicsTextItem *)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     buttonGroup->button(InsertTextButton)->setChecked(false);
     scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
 }
@@ -214,6 +197,9 @@ void MainWindow::textInserted(QGraphicsTextItem *)
 //! [9]
 void MainWindow::currentFontChanged(const QFont &)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     handleFontChange();
 }
 //! [9]
@@ -221,6 +207,9 @@ void MainWindow::currentFontChanged(const QFont &)
 //! [10]
 void MainWindow::fontSizeChanged(const QString &)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     handleFontChange();
 }
 //! [10]
@@ -228,6 +217,9 @@ void MainWindow::fontSizeChanged(const QString &)
 //! [11]
 void MainWindow::sceneScaleChanged(const QString &scale)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     double newScale = scale.left(scale.indexOf(tr("%"))).toDouble() / 100.0;
     QMatrix oldMatrix = view->matrix();
     view->resetMatrix();
@@ -239,6 +231,9 @@ void MainWindow::sceneScaleChanged(const QString &scale)
 //! [12]
 void MainWindow::textColorChanged()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     textAction = qobject_cast<QAction *>(sender());
     fontColorToolButton->setIcon(createColorToolButtonIcon(
                                      ":/images/textpointer.png",
@@ -250,6 +245,9 @@ void MainWindow::textColorChanged()
 //! [13]
 void MainWindow::itemColorChanged()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     fillAction = qobject_cast<QAction *>(sender());
     fillColorToolButton->setIcon(createColorToolButtonIcon(
                                      ":/images/floodfill.png",
@@ -261,6 +259,9 @@ void MainWindow::itemColorChanged()
 //! [14]
 void MainWindow::lineColorChanged()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     lineAction = qobject_cast<QAction *>(sender());
     lineColorToolButton->setIcon(createColorToolButtonIcon(
                                      ":/images/linecolor.png",
@@ -272,6 +273,9 @@ void MainWindow::lineColorChanged()
 //! [15]
 void MainWindow::textButtonTriggered()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     scene->setTextColor(qvariant_cast<QColor>(textAction->data()));
 }
 //! [15]
@@ -279,6 +283,9 @@ void MainWindow::textButtonTriggered()
 //! [16]
 void MainWindow::fillButtonTriggered()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     scene->setItemColor(qvariant_cast<QColor>(fillAction->data()));
 }
 //! [16]
@@ -286,6 +293,9 @@ void MainWindow::fillButtonTriggered()
 //! [17]
 void MainWindow::lineButtonTriggered()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     scene->setLineColor(qvariant_cast<QColor>(lineAction->data()));
 }
 //! [17]
@@ -293,6 +303,9 @@ void MainWindow::lineButtonTriggered()
 //! [18]
 void MainWindow::handleFontChange()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QFont font = fontCombo->currentFont();
     font.setPointSize(fontSizeCombo->currentText().toInt());
     font.setWeight(boldAction->isChecked() ? QFont::Bold : QFont::Normal);
@@ -306,6 +319,9 @@ void MainWindow::handleFontChange()
 //! [19]
 void MainWindow::itemSelected(QGraphicsItem *item)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     DiagramTextItem *textItem =
     qgraphicsitem_cast<DiagramTextItem *>(item);
 
@@ -321,6 +337,9 @@ void MainWindow::itemSelected(QGraphicsItem *item)
 //! [20]
 void MainWindow::about()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QMessageBox::about(this, tr("About Diagram Scene"),
                        tr("The <b>Diagram Scene</b> example shows "
                           "use of the graphics framework."));
@@ -330,6 +349,9 @@ void MainWindow::about()
 //! [21]
 void MainWindow::createToolBox()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     buttonGroup = new QButtonGroup(this);
     buttonGroup->setExclusive(false);
     connect(buttonGroup, SIGNAL(buttonClicked(int)),
@@ -396,6 +418,9 @@ void MainWindow::createToolBox()
 //! [23]
 void MainWindow::createActions()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     toFrontAction = new QAction(QIcon(":/images/bringtofront.png"),
                                 tr("Bring to &Front"), this);
     toFrontAction->setShortcut(tr("Ctrl+F"));
@@ -443,6 +468,9 @@ void MainWindow::createActions()
 //! [24]
 void MainWindow::createMenus()
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(exitAction);
 
@@ -460,7 +488,9 @@ void MainWindow::createMenus()
 //! [25]
 void MainWindow::createToolbars()
 {
-//! [25]
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     editToolBar = addToolBar(tr("Edit"));
     editToolBar->addAction(deleteAction);
     editToolBar->addAction(toFrontAction);
@@ -553,6 +583,9 @@ void MainWindow::createToolbars()
 //! [28]
 QWidget *MainWindow::createBackgroundCellWidget(const QString &text, const QString &image)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QToolButton *button = new QToolButton;
     button->setText(text);
     button->setIcon(QIcon(image));
@@ -574,7 +607,9 @@ QWidget *MainWindow::createBackgroundCellWidget(const QString &text, const QStri
 //! [29]
 QWidget *MainWindow::createCellWidget(const QString &text, DiagramItem::DiagramType type)
 {
-
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     DiagramItem item(type, itemMenu);
     QIcon icon(item.image());
 
@@ -598,6 +633,9 @@ QWidget *MainWindow::createCellWidget(const QString &text, DiagramItem::DiagramT
 //! [30]
 QMenu *MainWindow::createColorMenu(const char *slot, QColor defaultColor)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QList<QColor> colors;
     colors << Qt::black << Qt::white << Qt::red << Qt::blue << Qt::yellow;
     QStringList names;
@@ -621,6 +659,9 @@ QMenu *MainWindow::createColorMenu(const char *slot, QColor defaultColor)
 //! [31]
 QIcon MainWindow::createColorToolButtonIcon(const QString &imageFile, QColor color)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QPixmap pixmap(50, 80);
     pixmap.fill(Qt::transparent);
     QPainter painter(&pixmap);
@@ -638,6 +679,9 @@ QIcon MainWindow::createColorToolButtonIcon(const QString &imageFile, QColor col
 //! [32]
 QIcon MainWindow::createColorIcon(QColor color)
 {
+  #ifdef DEDUG_LOGIC6
+  out6<<__PRETTY_FUNCTION__<< endl;
+  #endif //DEDUG_LOGIC
     QPixmap pixmap(20, 20);
     QPainter painter(&pixmap);
     painter.setPen(Qt::NoPen);
