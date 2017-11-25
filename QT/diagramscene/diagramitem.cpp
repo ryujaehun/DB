@@ -64,7 +64,8 @@ DiagramItem::DiagramItem(DiagramType diagramType, QMenu *contextMenu,
     myDiagramType = diagramType;
     myContextMenu = contextMenu;
     QPolygonF myPolygon1, myPolygon2;                   //두겹 도형 그리기 위한 폴리
-    QRectF qrect(-100, 100, );                                       //외접 사각형
+   // QRectF qrect(-100, 100, );                                       //외접 사각형
+    
     QPainterPath path;                                  //QPainterPath: 그림 그리는 기능 제공함
     switch (myDiagramType) {
         case StartEnd:                                  //StartEnd: 시작 도형그리는 객체인데 gui에선 구현이 안된듯
