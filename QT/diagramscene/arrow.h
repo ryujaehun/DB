@@ -32,7 +32,7 @@ public:
     DiagramItem *endItem() const { return myEndItem; }
 
     void updatePosition();
-
+QColor getColor(){return myColor;}
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override;
 

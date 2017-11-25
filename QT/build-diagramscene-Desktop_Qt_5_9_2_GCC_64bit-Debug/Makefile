@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../diagramscene -I. -I../../../Qt5.9.2/5.9.2/gcc_64/include -I../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets -I../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui -I../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../diagramscene -I. -I../../../Qt5.9.2/5.9.2/gcc_64/include -I../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets -I../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui -I../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql -I../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/desktop/Qt5.9.2/5.9.2/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = diagramscene1.0.0
 DISTDIR = /home/desktop/DB/QT/build-diagramscene-Desktop_Qt_5_9_2_GCC_64bit-Debug/.tmp/diagramscene1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/desktop/Qt5.9.2/5.9.2/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/home/desktop/Qt5.9.2/5.9.2/gcc_64/lib -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/home/desktop/Qt5.9.2/5.9.2/gcc_64/lib -lQt5Widgets -lQt5Gui -lQt5Sql -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -55,7 +55,8 @@ SOURCES       = ../diagramscene/mainwindow.cpp \
 		../diagramscene/main.cpp \
 		../diagramscene/arrow.cpp \
 		../diagramscene/diagramtextitem.cpp \
-		../diagramscene/diagramscene.cpp qrc_diagramscene.cpp \
+		../diagramscene/diagramscene.cpp \
+		../diagramscene/database.cpp qrc_diagramscene.cpp \
 		moc_mainwindow.cpp \
 		moc_diagramscene.cpp \
 		moc_diagramtextitem.cpp
@@ -65,6 +66,7 @@ OBJECTS       = mainwindow.o \
 		arrow.o \
 		diagramtextitem.o \
 		diagramscene.o \
+		database.o \
 		qrc_diagramscene.o \
 		moc_mainwindow.o \
 		moc_diagramscene.o \
@@ -229,6 +231,7 @@ DIST          = ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/spec_post.prf \
+		../diagramscene/.qmake.stash \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/default_pre.prf \
@@ -252,12 +255,14 @@ DIST          = ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../diagramscene/diagramitem.h \
 		../diagramscene/diagramscene.h \
 		../diagramscene/arrow.h \
-		../diagramscene/diagramtextitem.h ../diagramscene/mainwindow.cpp \
+		../diagramscene/diagramtextitem.h \
+		../diagramscene/database.h ../diagramscene/mainwindow.cpp \
 		../diagramscene/diagramitem.cpp \
 		../diagramscene/main.cpp \
 		../diagramscene/arrow.cpp \
 		../diagramscene/diagramtextitem.cpp \
-		../diagramscene/diagramscene.cpp
+		../diagramscene/diagramscene.cpp \
+		../diagramscene/database.cpp
 QMAKE_TARGET  = diagramscene
 DESTDIR       = 
 TARGET        = diagramscene
@@ -429,6 +434,7 @@ Makefile: ../diagramscene/diagramscene.pro ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/toolchain.prf \
 		../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/default_pre.prf \
@@ -452,6 +458,7 @@ Makefile: ../diagramscene/diagramscene.pro ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs
 		../diagramscene/diagramscene.qrc \
 		../../../Qt5.9.2/5.9.2/gcc_64/lib/libQt5Widgets.prl \
 		../../../Qt5.9.2/5.9.2/gcc_64/lib/libQt5Gui.prl \
+		../../../Qt5.9.2/5.9.2/gcc_64/lib/libQt5Sql.prl \
 		../../../Qt5.9.2/5.9.2/gcc_64/lib/libQt5Core.prl
 	$(QMAKE) -o Makefile ../diagramscene/diagramscene.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/spec_pre.prf:
@@ -614,6 +621,7 @@ Makefile: ../diagramscene/diagramscene.pro ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs
 ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/qt_config.prf:
 ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/toolchain.prf:
 ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/default_pre.prf:
@@ -637,6 +645,7 @@ Makefile: ../diagramscene/diagramscene.pro ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs
 ../diagramscene/diagramscene.qrc:
 ../../../Qt5.9.2/5.9.2/gcc_64/lib/libQt5Widgets.prl:
 ../../../Qt5.9.2/5.9.2/gcc_64/lib/libQt5Gui.prl:
+../../../Qt5.9.2/5.9.2/gcc_64/lib/libQt5Sql.prl:
 ../../../Qt5.9.2/5.9.2/gcc_64/lib/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../diagramscene/diagramscene.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -654,8 +663,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../diagramscene/diagramscene.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt5.9.2/5.9.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../diagramscene/mainwindow.h ../diagramscene/diagramitem.h ../diagramscene/diagramscene.h ../diagramscene/arrow.h ../diagramscene/diagramtextitem.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../diagramscene/mainwindow.cpp ../diagramscene/diagramitem.cpp ../diagramscene/main.cpp ../diagramscene/arrow.cpp ../diagramscene/diagramtextitem.cpp ../diagramscene/diagramscene.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../diagramscene/mainwindow.h ../diagramscene/diagramitem.h ../diagramscene/diagramscene.h ../diagramscene/arrow.h ../diagramscene/diagramtextitem.h ../diagramscene/database.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../diagramscene/mainwindow.cpp ../diagramscene/diagramitem.cpp ../diagramscene/main.cpp ../diagramscene/arrow.cpp ../diagramscene/diagramtextitem.cpp ../diagramscene/diagramscene.cpp ../diagramscene/database.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -711,7 +720,7 @@ compiler_moc_header_make_all: moc_mainwindow.cpp moc_diagramscene.cpp moc_diagra
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_diagramscene.cpp moc_diagramtextitem.cpp
 moc_mainwindow.cpp: ../diagramscene/diagramitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
@@ -796,6 +805,7 @@ moc_mainwindow.cpp: ../diagramscene/diagramitem.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qimage.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixelformat.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qkeysequence.h \
@@ -820,10 +830,10 @@ moc_mainwindow.cpp: ../diagramscene/diagramitem.h \
 		../diagramscene/mainwindow.h \
 		moc_predefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/bin/moc
-	/home/desktop/Qt5.9.2/5.9.2/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++ -I/home/desktop/DB/QT/diagramscene -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtWidgets -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtGui -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../diagramscene/mainwindow.h -o moc_mainwindow.cpp
+	/home/desktop/Qt5.9.2/5.9.2/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++ -I/home/desktop/DB/QT/diagramscene -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtWidgets -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtGui -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtSql -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../diagramscene/mainwindow.h -o moc_mainwindow.cpp
 
 moc_diagramscene.cpp: ../diagramscene/diagramitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
@@ -908,6 +918,7 @@ moc_diagramscene.cpp: ../diagramscene/diagramitem.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qimage.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixelformat.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qkeysequence.h \
@@ -928,7 +939,7 @@ moc_diagramscene.cpp: ../diagramscene/diagramitem.h \
 		../diagramscene/diagramscene.h \
 		moc_predefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/bin/moc
-	/home/desktop/Qt5.9.2/5.9.2/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++ -I/home/desktop/DB/QT/diagramscene -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtWidgets -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtGui -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../diagramscene/diagramscene.h -o moc_diagramscene.cpp
+	/home/desktop/Qt5.9.2/5.9.2/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++ -I/home/desktop/DB/QT/diagramscene -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtWidgets -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtGui -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtSql -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../diagramscene/diagramscene.h -o moc_diagramscene.cpp
 
 moc_diagramtextitem.cpp: ../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsTextItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
@@ -1021,7 +1032,7 @@ moc_diagramtextitem.cpp: ../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphi
 		../diagramscene/diagramtextitem.h \
 		moc_predefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/bin/moc
-	/home/desktop/Qt5.9.2/5.9.2/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++ -I/home/desktop/DB/QT/diagramscene -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtWidgets -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtGui -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../diagramscene/diagramtextitem.h -o moc_diagramtextitem.cpp
+	/home/desktop/Qt5.9.2/5.9.2/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/mkspecs/linux-g++ -I/home/desktop/DB/QT/diagramscene -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtWidgets -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtGui -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtSql -I/home/desktop/Qt5.9.2/5.9.2/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../diagramscene/diagramtextitem.h -o moc_diagramtextitem.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1037,11 +1048,9 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsLineItem \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+mainwindow.o: ../diagramscene/mainwindow.cpp ../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QTextStream \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig.h \
@@ -1063,8 +1072,6 @@ mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnamespace.h \
@@ -1090,20 +1097,25 @@ mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmap.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhash.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvector.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpoint.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qset.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../diagramscene/arrow.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsLineItem \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrect.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmargins.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsize.h \
@@ -1124,6 +1136,7 @@ mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixelformat.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtransform.h \
 		../diagramscene/diagramitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
@@ -1154,6 +1167,11 @@ mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qcursor.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qicon.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QFileDialog \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdir.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfileinfo.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qdialog.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QtWidgets \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QtWidgetsDepends \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QtCore \
@@ -1182,8 +1200,6 @@ mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdatetime.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdeadlinetimer.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qelapsedtimer.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdir.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfileinfo.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdiriterator.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qeasingcurve.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qendian.h \
@@ -1393,7 +1409,6 @@ mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qcalendarwidget.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qcheckbox.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qcolordialog.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qdialog.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qcolormap.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qcolumnview.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qcombobox.h \
@@ -1410,7 +1425,6 @@ mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qdockwidget.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qdrawutil.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qerrormessage.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qfiledialog.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qfilesystemmodel.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qfocusframe.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qfontcombobox.h \
@@ -1499,11 +1513,9 @@ mainwindow.o: ../diagramscene/mainwindow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../diagramscene/mainwindow.cpp
 
-diagramitem.o: ../diagramscene/diagramitem.cpp ../diagramscene/diagramitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+diagramitem.o: ../diagramscene/diagramitem.cpp ../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QTextStream \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig.h \
@@ -1525,8 +1537,6 @@ diagramitem.o: ../diagramscene/diagramitem.cpp ../diagramscene/diagramitem.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnamespace.h \
@@ -1552,20 +1562,25 @@ diagramitem.o: ../diagramscene/diagramitem.cpp ../diagramscene/diagramitem.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmap.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhash.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvector.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpoint.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qset.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../diagramscene/diagramitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsItem \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrect.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmargins.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsize.h \
@@ -1585,6 +1600,7 @@ diagramitem.o: ../diagramscene/diagramitem.cpp ../diagramscene/diagramitem.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qimage.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixelformat.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qkeysequence.h \
@@ -1619,12 +1635,9 @@ diagramitem.o: ../diagramscene/diagramitem.cpp ../diagramscene/diagramitem.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtextoption.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o diagramitem.o ../diagramscene/diagramitem.cpp
 
-main.o: ../diagramscene/main.cpp ../diagramscene/mainwindow.h \
-		../diagramscene/diagramitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+main.o: ../diagramscene/main.cpp ../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QTextStream \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig.h \
@@ -1646,8 +1659,6 @@ main.o: ../diagramscene/main.cpp ../diagramscene/mainwindow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnamespace.h \
@@ -1673,20 +1684,26 @@ main.o: ../diagramscene/main.cpp ../diagramscene/mainwindow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmap.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhash.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvector.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpoint.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qset.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../diagramscene/mainwindow.h \
+		../diagramscene/diagramitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsItem \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrect.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmargins.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsize.h \
@@ -1706,6 +1723,7 @@ main.o: ../diagramscene/main.cpp ../diagramscene/mainwindow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qimage.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixelformat.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qkeysequence.h \
@@ -1736,11 +1754,9 @@ main.o: ../diagramscene/main.cpp ../diagramscene/mainwindow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qinputmethod.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../diagramscene/main.cpp
 
-arrow.o: ../diagramscene/arrow.cpp ../diagramscene/arrow.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsLineItem \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+arrow.o: ../diagramscene/arrow.cpp ../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QTextStream \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig.h \
@@ -1762,8 +1778,6 @@ arrow.o: ../diagramscene/arrow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnamespace.h \
@@ -1789,20 +1803,25 @@ arrow.o: ../diagramscene/arrow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmap.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhash.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvector.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpoint.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qset.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../diagramscene/arrow.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsLineItem \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrect.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmargins.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsize.h \
@@ -1823,6 +1842,7 @@ arrow.o: ../diagramscene/arrow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixelformat.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtransform.h \
 		../diagramscene/diagramitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
@@ -1844,11 +1864,9 @@ arrow.o: ../diagramscene/arrow.cpp ../diagramscene/arrow.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qfontmetrics.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arrow.o ../diagramscene/arrow.cpp
 
-diagramtextitem.o: ../diagramscene/diagramtextitem.cpp ../diagramscene/diagramtextitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsTextItem \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+diagramtextitem.o: ../diagramscene/diagramtextitem.cpp ../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QTextStream \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig.h \
@@ -1870,8 +1888,6 @@ diagramtextitem.o: ../diagramscene/diagramtextitem.cpp ../diagramscene/diagramte
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnamespace.h \
@@ -1897,20 +1913,25 @@ diagramtextitem.o: ../diagramscene/diagramtextitem.cpp ../diagramscene/diagramte
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmap.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhash.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvector.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpoint.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qset.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../diagramscene/diagramtextitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsTextItem \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrect.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmargins.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsize.h \
@@ -1935,6 +1956,7 @@ diagramtextitem.o: ../diagramscene/diagramtextitem.cpp ../diagramscene/diagramte
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qbrush.h \
 		../diagramscene/diagramscene.h \
 		../diagramscene/diagramitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
@@ -1950,12 +1972,9 @@ diagramtextitem.o: ../diagramscene/diagramtextitem.cpp ../diagramscene/diagramte
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qfont.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o diagramtextitem.o ../diagramscene/diagramtextitem.cpp
 
-diagramscene.o: ../diagramscene/diagramscene.cpp ../diagramscene/diagramscene.h \
-		../diagramscene/diagramitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+diagramscene.o: ../diagramscene/diagramscene.cpp ../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QTextStream \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig.h \
@@ -1977,8 +1996,6 @@ diagramscene.o: ../diagramscene/diagramscene.cpp ../diagramscene/diagramscene.h 
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnamespace.h \
@@ -2004,20 +2021,26 @@ diagramscene.o: ../diagramscene/diagramscene.cpp ../diagramscene/diagramscene.h 
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvariant.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmap.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhash.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
-		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvector.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpoint.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qset.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../diagramscene/diagramscene.h \
+		../diagramscene/diagramitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsItem \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicsitem.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrect.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmargins.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsize.h \
@@ -2037,6 +2060,7 @@ diagramscene.o: ../diagramscene/diagramscene.cpp ../diagramscene/diagramscene.h 
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qimage.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixelformat.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/QList \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qkeysequence.h \
@@ -2063,6 +2087,258 @@ diagramscene.o: ../diagramscene/diagramscene.cpp ../diagramscene/diagramscene.h 
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QGraphicsSceneMouseEvent \
 		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qgraphicssceneevent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o diagramscene.o ../diagramscene/diagramscene.cpp
+
+database.o: ../diagramscene/database.cpp ../diagramscene/database.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/QtSql \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/QtSqlDepends \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QtCore \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QtCoreDepends \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qflags.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qabstractanimation.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstring.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qchar.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlist.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpair.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qabstracteventdispatcher.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qeventloop.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmap.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhash.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvector.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qset.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qabstractnativeeventfilter.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qabstractproxymodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qabstractstate.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qabstracttransition.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qanimationgroup.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qarraydataops.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qarraydatapointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qbitarray.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qbuffer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qbytearraymatcher.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcache.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcollator.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcommandlineoption.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcommandlineparser.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qcryptographichash.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdatastream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdatetime.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdeadlinetimer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qelapsedtimer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdir.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfileinfo.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfile.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfiledevice.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qdiriterator.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qeasingcurve.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qendian.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qeventtransition.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qexception.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfactoryinterface.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfileselector.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QObject \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QStringList \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfilesystemwatcher.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfinalstate.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfuture.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfutureinterface.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrunnable.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qresultstore.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfuturesynchronizer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qfuturewatcher.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qhistorystate.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qidentityproxymodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qisenum.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qjsonarray.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qjsonvalue.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qjsondocument.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qjsonobject.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlibrary.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlibraryinfo.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qversionnumber.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qline.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlinkedlist.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qlockfile.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qloggingcategory.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmath.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmessageauthenticationcode.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmetaobject.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmimedata.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmimedatabase.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qmimetype.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qobjectcleanuphandler.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qoperatingsystemversion.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qparallelanimationgroup.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpauseanimation.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qplugin.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpointer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpluginloader.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qprocess.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qpropertyanimation.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qvariantanimation.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qqueue.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qreadwritelock.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qrect.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsize.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qregularexpression.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qresource.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsavefile.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qscopedvaluerollback.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsemaphore.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsequentialanimationgroup.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsettings.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsharedmemory.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsignalmapper.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsignaltransition.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsocketnotifier.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsortfilterproxymodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstack.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstandardpaths.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstate.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstatemachine.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstorageinfo.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qstringlistmodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qsystemsemaphore.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtemporarydir.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/QScopedPointer \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtemporaryfile.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextboundaryfinder.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtextcodec.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qthread.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qthreadpool.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qthreadstorage.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtimeline.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtimezone.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtranslator.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtypetraits.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qurl.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qurlquery.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/quuid.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qwaitcondition.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qwineventnotifier.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qxmlstream.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtCore/qtcoreversion.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqldriver.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqldriverplugin.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlfield.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlindex.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlrecord.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlquerymodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlrelationaldelegate.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qitemdelegate.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qrgba64.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qmatrix.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpolygon.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qregion.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpainterpath.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qimage.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixelformat.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qfont.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qcursor.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qevent.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qvalidator.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtGui/qicon.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qslider.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qstyle.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qlistview.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qcombobox.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlrelationaltablemodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqltablemodel.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qsqlresult.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtSql/qtsqlversion.h \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/QTableView \
+		../../../Qt5.9.2/5.9.2/gcc_64/include/QtWidgets/qtableview.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o database.o ../diagramscene/database.cpp
 
 qrc_diagramscene.o: qrc_diagramscene.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_diagramscene.o qrc_diagramscene.cpp

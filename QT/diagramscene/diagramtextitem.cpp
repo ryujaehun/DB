@@ -25,13 +25,18 @@ DiagramTextItem::DiagramTextItem(QGraphicsItem *parent)
 QVariant DiagramTextItem::itemChange(GraphicsItemChange change,
                      const QVariant &value)
 {
+
+
   #ifdef DEDUG_LOGIC4
   out4 <<__PRETTY_FUNCTION__<< endl;
   #endif //DEDUG_LOGIC
+
     if (change == QGraphicsItem::ItemSelectedHasChanged)
         emit selectedChange(this);
     return value;
+
 }
+
 
 void DiagramTextItem::focusOutEvent(QFocusEvent *event)
 {

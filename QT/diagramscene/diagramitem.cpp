@@ -6,6 +6,8 @@ QTextStream out2(stdout);
 #endif //DEDUG_LOGIC
 
 
+
+
 #include "diagramitem.h"
 #include "arrow.h"
 
@@ -79,6 +81,7 @@ DiagramItem::DiagramItem(DiagramType diagramType, QMenu *contextMenu,
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+
 }
 //! [0]
 
@@ -119,7 +122,15 @@ void DiagramItem::addArrow(Arrow *arrow)
     arrows.append(arrow);
 }
 //! [3]
-
+ int  resizeHandleWidth=6;
+QRect DiagramItem::resizeHandle() const
+{
+  #ifdef DEDUG_LOGIC2
+   out2 <<__PRETTY_FUNCTION__<< endl;
+   #endif //DEDUG_LOGIC
+    QPoint br = myPolygon.toPolygon().boundingRect().bottomRight();
+    return QRect(br - QPoint(resizeHandleWidth, resizeHandleWidth), br);
+}
 //! [4]
 QPixmap DiagramItem::image() const
 {
@@ -132,6 +143,7 @@ QPixmap DiagramItem::image() const
     painter.setPen(QPen(Qt::black, 8));
     painter.translate(125, 125);
     painter.drawPolyline(myPolygon);
+
 
     return pixmap;
 }
@@ -152,15 +164,19 @@ void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 //! [6]
 QVariant DiagramItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
+
   #ifdef DEDUG_LOGIC2
      out2 <<__PRETTY_FUNCTION__<< endl;
   #endif
     if (change == QGraphicsItem::ItemPositionChange) {
         foreach (Arrow *arrow, arrows) {
+
             arrow->updatePosition();
         }
-    }
+
+     }
 
     return value;
 }
+
 //! [6]

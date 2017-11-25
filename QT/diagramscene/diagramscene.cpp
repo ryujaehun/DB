@@ -86,7 +86,7 @@ void DiagramScene::setFont(const QFont &font)
 
     if (isItemChange(DiagramTextItem::Type)) {
         QGraphicsTextItem *item = qgraphicsitem_cast<DiagramTextItem *>(selectedItems().first());
-        //At this point the selection can change so the first selected item might not be a DiagramTextItem
+
         if (item)
             item->setFont(myFont);
     }
@@ -129,13 +129,14 @@ void DiagramScene::editorLostFocus(DiagramTextItem *item)
 //! [6]
 void DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+
   #ifdef DEDUG_LOGIC3
   out3 <<__PRETTY_FUNCTION__<< endl;
   #endif //DEDUG_LOGIC
     if (mouseEvent->button() != Qt::LeftButton)
         return;
 
-    DiagramItem *item;
+DiagramItem * item;
     switch (myMode) {
         case InsertItem:
             item = new DiagramItem(myItemType, myItemMenu);
@@ -183,6 +184,9 @@ void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QLineF newLine(line->line().p1(), mouseEvent->scenePos());
         line->setLine(newLine);
     } else if (myMode == MoveItem) {
+
+
+
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     }
 }

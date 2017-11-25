@@ -51,6 +51,7 @@
 #ifndef DIAGRAMITEM_H
 #define DIAGRAMITEM_H
 
+#include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QList>
 
@@ -78,7 +79,8 @@ public:
     enum DiagramType { Step, Conditional, StartEnd, Io,/*다이어그램*/ Entity, Attribute, Relationship, Multi_Attribute, Weak_relationship, Weak_entity, Relation };       //도형 아이디
 
     DiagramItem(DiagramType diagramType, QMenu *contextMenu, QGraphicsItem *parent = 0);
-
+       DiagramItem(DiagramType diagramType, int index, QMenu *contextMenu,QGraphicsItem * parent = 0);
+     QRect resizeHandle() const;
     void removeArrow(Arrow *arrow);
     void removeArrows();
     DiagramType diagramType() const { return myDiagramType; }
@@ -86,6 +88,7 @@ public:
     void addArrow(Arrow *arrow);
     QPixmap image() const;
     int type() const override { return Type;}
+    int index() const {return itemIndex;}
 
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
@@ -96,6 +99,7 @@ private:
     QPolygonF myPolygon;
     QMenu *myContextMenu;
     QList<Arrow *> arrows;
+      int itemIndex = 0;
 };
 //! [0]
 

@@ -6,7 +6,6 @@ QTextStream out1(stdout);
 #endif //DEDUG_LOGIC
 
 
-
 #include "arrow.h"
 
 #include <math.h>

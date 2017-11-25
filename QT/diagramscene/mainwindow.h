@@ -102,6 +102,16 @@ private slots:
     void itemSelected(QGraphicsItem *item);
     void about();
 
+    // addition
+    void openFile();
+       void saveFile();
+       void fileSaveAs();
+       void copy();
+       void paste();
+       void cut();
+       void group();
+       void ungroup();
+
 private:
     void createToolBox();
     void createActions();
@@ -126,9 +136,29 @@ private:
     QAction *sendBackAction;
     QAction *aboutAction;
 
+    //addition
+    QAction *saveAction;
+    QAction *openAction;
+    QAction *saveAsAction;
+
+    QAction *copyAction;
+    QAction *cutAction;
+    QAction *pasteAction;
+
+    QAction *groupAction;
+    QAction *ungroupAction;
+
+    QAction *undo;
+    QAction *redo;
+
     QMenu *fileMenu;
     QMenu *itemMenu;
     QMenu *aboutMenu;
+    //addition
+    QMenu *editMenu;
+    QMenu *toolMenu;
+    QMenu *stepMenu;
+
 
     QToolBar *textToolBar;
     QToolBar *editToolBar;
@@ -148,12 +178,37 @@ private:
     QToolButton *fontColorToolButton;
     QToolButton *fillColorToolButton;
     QToolButton *lineColorToolButton;
+
     QAction *boldAction;
     QAction *underlineAction;
     QAction *italicAction;
     QAction *textAction;
     QAction *fillAction;
     QAction *lineAction;
+
+    //addition
+    QList <QGraphicsItem*>itemList;
+        QList <QString> string;
+        QList <QGraphicsItem*>copyItems;
+        DiagramItem::DiagramType cutType, cutStartType, cutEndType;
+        QPointF cutPosition,cutStartPos,cutEndPos;
+        QColor cutColor;
+        QFont cutFont;
+        int cutFontSize;
+        int grouped;
+
+
+        QList <QGraphicsItem*> groupItems;
+        QList <QGraphicsItem*> copyList;
+
+        bool saveOnce = false;
+        QString sFileName;
+        QList<DiagramItem*> startItems;
+        QList<DiagramItem*> endItems;
+        QList<QGraphicsItemGroup*> groups;
+        QList<QGraphicsItem*>groupItemToCopy;
+        QList<QGraphicsItem*>readyPaste;
+
 };
 //! [0]
 

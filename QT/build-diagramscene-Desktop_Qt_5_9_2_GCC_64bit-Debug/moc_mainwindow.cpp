@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[32];
-    char stringdata0[436];
+    QByteArrayData data[40];
+    char stringdata0[494];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -62,7 +62,15 @@ QT_MOC_LITERAL(27, 365, 19), // "lineButtonTriggered"
 QT_MOC_LITERAL(28, 385, 16), // "handleFontChange"
 QT_MOC_LITERAL(29, 402, 12), // "itemSelected"
 QT_MOC_LITERAL(30, 415, 14), // "QGraphicsItem*"
-QT_MOC_LITERAL(31, 430, 5) // "about"
+QT_MOC_LITERAL(31, 430, 5), // "about"
+QT_MOC_LITERAL(32, 436, 8), // "openFile"
+QT_MOC_LITERAL(33, 445, 8), // "saveFile"
+QT_MOC_LITERAL(34, 454, 10), // "fileSaveAs"
+QT_MOC_LITERAL(35, 465, 4), // "copy"
+QT_MOC_LITERAL(36, 470, 5), // "paste"
+QT_MOC_LITERAL(37, 476, 3), // "cut"
+QT_MOC_LITERAL(38, 480, 5), // "group"
+QT_MOC_LITERAL(39, 486, 7) // "ungroup"
 
     },
     "MainWindow\0backgroundButtonGroupClicked\0"
@@ -76,7 +84,8 @@ QT_MOC_LITERAL(31, 430, 5) // "about"
     "lineColorChanged\0textButtonTriggered\0"
     "fillButtonTriggered\0lineButtonTriggered\0"
     "handleFontChange\0itemSelected\0"
-    "QGraphicsItem*\0about"
+    "QGraphicsItem*\0about\0openFile\0saveFile\0"
+    "fileSaveAs\0copy\0paste\0cut\0group\0ungroup"
 };
 #undef QT_MOC_LITERAL
 
@@ -86,7 +95,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      28,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -94,26 +103,34 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,  114,    2, 0x08 /* Private */,
-       5,    1,  117,    2, 0x08 /* Private */,
-       7,    0,  120,    2, 0x08 /* Private */,
-       8,    1,  121,    2, 0x08 /* Private */,
-       9,    0,  124,    2, 0x08 /* Private */,
-      10,    0,  125,    2, 0x08 /* Private */,
-      11,    1,  126,    2, 0x08 /* Private */,
-      14,    1,  129,    2, 0x08 /* Private */,
-      16,    1,  132,    2, 0x08 /* Private */,
-      18,    1,  135,    2, 0x08 /* Private */,
-      20,    1,  138,    2, 0x08 /* Private */,
-      22,    0,  141,    2, 0x08 /* Private */,
-      23,    0,  142,    2, 0x08 /* Private */,
-      24,    0,  143,    2, 0x08 /* Private */,
-      25,    0,  144,    2, 0x08 /* Private */,
-      26,    0,  145,    2, 0x08 /* Private */,
-      27,    0,  146,    2, 0x08 /* Private */,
-      28,    0,  147,    2, 0x08 /* Private */,
-      29,    1,  148,    2, 0x08 /* Private */,
-      31,    0,  151,    2, 0x08 /* Private */,
+       1,    1,  154,    2, 0x08 /* Private */,
+       5,    1,  157,    2, 0x08 /* Private */,
+       7,    0,  160,    2, 0x08 /* Private */,
+       8,    1,  161,    2, 0x08 /* Private */,
+       9,    0,  164,    2, 0x08 /* Private */,
+      10,    0,  165,    2, 0x08 /* Private */,
+      11,    1,  166,    2, 0x08 /* Private */,
+      14,    1,  169,    2, 0x08 /* Private */,
+      16,    1,  172,    2, 0x08 /* Private */,
+      18,    1,  175,    2, 0x08 /* Private */,
+      20,    1,  178,    2, 0x08 /* Private */,
+      22,    0,  181,    2, 0x08 /* Private */,
+      23,    0,  182,    2, 0x08 /* Private */,
+      24,    0,  183,    2, 0x08 /* Private */,
+      25,    0,  184,    2, 0x08 /* Private */,
+      26,    0,  185,    2, 0x08 /* Private */,
+      27,    0,  186,    2, 0x08 /* Private */,
+      28,    0,  187,    2, 0x08 /* Private */,
+      29,    1,  188,    2, 0x08 /* Private */,
+      31,    0,  191,    2, 0x08 /* Private */,
+      32,    0,  192,    2, 0x08 /* Private */,
+      33,    0,  193,    2, 0x08 /* Private */,
+      34,    0,  194,    2, 0x08 /* Private */,
+      35,    0,  195,    2, 0x08 /* Private */,
+      36,    0,  196,    2, 0x08 /* Private */,
+      37,    0,  197,    2, 0x08 /* Private */,
+      38,    0,  198,    2, 0x08 /* Private */,
+      39,    0,  199,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -135,6 +152,14 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 30,   13,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -166,6 +191,14 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 17: _t->handleFontChange(); break;
         case 18: _t->itemSelected((*reinterpret_cast< QGraphicsItem*(*)>(_a[1]))); break;
         case 19: _t->about(); break;
+        case 20: _t->openFile(); break;
+        case 21: _t->saveFile(); break;
+        case 22: _t->fileSaveAs(); break;
+        case 23: _t->copy(); break;
+        case 24: _t->paste(); break;
+        case 25: _t->cut(); break;
+        case 26: _t->group(); break;
+        case 27: _t->ungroup(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -214,13 +247,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 28)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 28;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 28)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 28;
     }
     return _id;
 }

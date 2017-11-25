@@ -94,6 +94,7 @@ signals:
     void textInserted(QGraphicsTextItem *item);
     void itemSelected(QGraphicsItem *item);
 
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
@@ -102,11 +103,13 @@ protected:
 private:
     bool isItemChange(int type);
 
+
     DiagramItem::DiagramType myItemType;
     QMenu *myItemMenu;
     Mode myMode;
     bool leftButtonDown;
     QPointF startPoint;
+
     QGraphicsLineItem *line;
     QFont myFont;
     DiagramTextItem *textItem;
