@@ -11,7 +11,7 @@ QTextStream out6(stdout);
 #include "diagramscene.h"
 #include "diagramtextitem.h"
 #include "mainwindow.h"
-
+#include"database.h"
 
 #include <QFileDialog>
 #include <QtWidgets>
@@ -25,6 +25,7 @@ MainWindow::MainWindow()
   out6<<__PRETTY_FUNCTION__<< endl;
   #endif //DEDUG_LOGIC
 
+   database.connectDb();
     createActions();
     createToolBox();
     createMenus();

@@ -14,9 +14,9 @@ void Database::connectDb()
     driverList = QSqlDatabase::drivers();
 
 
-        db.setHostName("tibero");
-        db.setDatabaseName("XE");
-        db.setUserName("tibero");
+        db.setHostName("test");
+        db.setDatabaseName("TIBERO");
+        db.setUserName("HR");
         db.setPassword("tibero");
 
 
@@ -26,6 +26,11 @@ void Database::connectDb()
         qDebug() << "connected " << db.hostName();
 
     }else{
+
+        messageBox;
+        messageBox.critical(0,"DB connect Error","An connect error has occured !");
+
+
         qDebug()<<"Error while opening DB: " << db.databaseName()
                << db.lastError();
     }

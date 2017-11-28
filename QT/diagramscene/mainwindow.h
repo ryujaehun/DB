@@ -52,7 +52,8 @@
 #define MAINWINDOW_H
 
 #include "diagramitem.h"
-
+#include <QtSql/QtSql>
+#include"database.h"
 #include <QMainWindow>
 
 class DiagramScene;
@@ -117,6 +118,7 @@ private:
     void createActions();
     void createMenus();
     void createToolbars();
+    Database database;
     QWidget *createBackgroundCellWidget(const QString &text,
                                         const QString &image);
     QWidget *createCellWidget(const QString &text,
