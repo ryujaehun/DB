@@ -203,6 +203,7 @@
             this.mainPanel.Size = new System.Drawing.Size(1200, 702);
             this.mainPanel.TabIndex = 2;
             this.mainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
+            this.mainPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseClick);
             // 
             // diagramForm
             // 
@@ -219,6 +220,7 @@
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "diagramForm";
             this.Text = "diagramForm";
+       
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
