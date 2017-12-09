@@ -28,4 +28,6 @@ namespace C_Sharp
         public DrawImage(char type_, System.Drawing.Image image_)
         { type = type_; image = image_; }
     }
+
+    public class CanvasController : BaseController
 }

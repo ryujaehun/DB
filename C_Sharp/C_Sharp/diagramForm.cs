@@ -76,21 +76,22 @@ namespace C_Sharp
             {
 
                 if (da.type == 'R') e.Graphics.DrawRectangle(new Pen(da.color), da.rect); //entity
+
                 else if (da.type == 'W') e.Graphics.DrawRectangle(new Pen(da.color), da.rect); //weak entity
 
                 else if (da.type == 'E') e.Graphics.DrawEllipse(new Pen(da.color), da.rect); //attibute
-                else if (da.type == 'O') e.Graphics.DrawEllipse(new Pen(da.color), da.rect);  //multi attibute
 
+                else if (da.type == 'O') e.Graphics.DrawEllipse(new Pen(da.color), da.rect);  //multi attibute
 
                 else if (da.type == 'B') e.Graphics.DrawEllipse(new Pen(da.color), da.rect);  //multi attibute
 
-                else if (da.type == 'S') {
+                else if (da.type == 'S') {                                                    //relationship
                     Point[] PointArray = { new Point((da.rect.Left+da.rect.Right)/2, da.rect.Top), new Point(da.rect.Right, (da.rect.Top+da.rect.Bottom)/2), new Point((da.rect.Left+da.rect.Right)/2, da.rect.Bottom), new Point(da.rect.Left, (da.rect.Top + da.rect.Bottom)/2)};
           
                     e.Graphics.DrawPolygon(new Pen(da.color), PointArray);
                 }
 
-                else if (da.type == 'X')
+                else if (da.type == 'X')                                                      //weakrelationship
                 {
                     Point[] PointArray = { new Point((da.rect.Left + da.rect.Right) / 2, da.rect.Top), new Point(da.rect.Right, (da.rect.Top + da.rect.Bottom) / 2), new Point((da.rect.Left + da.rect.Right) / 2, da.rect.Bottom), new Point(da.rect.Left, (da.rect.Top + da.rect.Bottom) / 2) };
 
