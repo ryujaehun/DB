@@ -1,0 +1,11 @@
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\obj\Debug\C_Sharp.diagramForm.resources
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\obj\Debug\C_Sharp.Form1.resources
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\obj\Debug\C_Sharp.Properties.Resources.resources
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\obj\Debug\C_Sharp.csproj.GenerateResource.Cache
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\obj\Debug\C_Sharp.csproj.CoreCompileInputs.cache
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\bin\Debug\C_Sharp.exe.config
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\bin\Debug\C_Sharp.exe
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\bin\Debug\C_Sharp.pdb
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\obj\Debug\C_Sharp.exe
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\obj\Debug\C_Sharp.pdb
+C:\Users\김석원\Desktop\DB 프로젝트\DB2\DB-CS\C_Sharp\C_Sharp\obj\Debug\C_Sharp.csprojResolveAssemblyReference.cache
