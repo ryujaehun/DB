@@ -1,0 +1,2 @@
+http://khuhub.khu.ac.kr/2013103902/DBProject/blob/master/README.md
+데모용 소스 및 파일 khuhub에 Install 방법과 함께 게시하였습니다. 
